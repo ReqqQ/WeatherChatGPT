@@ -1,7 +1,7 @@
 package UI
 
 import (
-	"WeatherAPI/App"
+	"WeatherAPI/Config"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -11,6 +11,6 @@ func InitGetRoutes(app *fiber.App) {
 		return c.Next()
 	})
 	v1.Get("/weather", func(c *fiber.Ctx) error {
-		return c.JSON(App.Controller.WeatherController.GetWeatherInfo(c))
+		return c.JSON(Config.App.Controller.WeatherController.GetWeatherInfo(c))
 	})
 }

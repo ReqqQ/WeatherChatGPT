@@ -2,7 +2,10 @@ module WeatherAPI
 
 go 1.20
 
-require github.com/gofiber/fiber/v2 v2.46.0
+require (
+	github.com/gofiber/fiber/v2 v2.46.0
+	github.com/google/wire v0.5.0
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect

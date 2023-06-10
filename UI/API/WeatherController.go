@@ -1,20 +1,27 @@
-package UIAPI
+package API
 
 import (
+	AppWeather "WeatherAPI/App/Weather"
 	"github.com/gofiber/fiber/v2"
 )
 
 type WeatherController struct {
+	WeatherService AppWeather.WeatherService
+	WeatherFactory AppWeather.WeatherFactory
 }
 type WeatherControllerInterface interface {
 	GetWeatherInfo(c *fiber.Ctx) string
 }
 
-func (wc WeatherController) GetWeatherInfo(c *fiber.Ctx) string {
-	//service := Application.WeatherApp
-	//command := service.WeatherFactory.BuildWeatherCommand(c)
-	//
-	//return service.WeatherService.GetWeatherInfo(command)
+func NewWeatherController(weatherService AppWeather.WeatherService, WeatherFactory AppWeather.WeatherFactory) *WeatherController {
+	return &WeatherController{
+		WeatherService: weatherService,
+		WeatherFactory: WeatherFactory,
+	}
+}
 
-	return ""
+func (wc WeatherController) GetWeatherInfo(c *fiber.Ctx) string {
+	command := wc.WeatherFactory.BuildWeatherCommand(c)
+
+	return wc.WeatherService.GetWeatherInfo(command)
 }

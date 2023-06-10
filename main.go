@@ -1,15 +1,12 @@
 package main
 
 import (
-	"WeatherAPI/App"
+	"WeatherAPI/Config"
 	"WeatherAPI/UI"
-	"WeatherAPI/Utilis"
 )
 
 func main() {
-	app := App.Init()
-	DIContainer := Utilis.Init()
-	App.SetDependency(DIContainer)
+	app := Config.Init()
 	UI.InitGetRoutes(app)
-	App.Start(app)
+	Config.Start(app)
 }
