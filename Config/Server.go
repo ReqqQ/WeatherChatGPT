@@ -3,6 +3,7 @@ package Config
 import (
 	"WeatherAPI/Config/DI"
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 func Init() *fiber.App {
@@ -10,6 +11,7 @@ func Init() *fiber.App {
 	if err != nil {
 		return nil
 	}
+	err = godotenv.Load(".env")
 
 	return fiber.New()
 }

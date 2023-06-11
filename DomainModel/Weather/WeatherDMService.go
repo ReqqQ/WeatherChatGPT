@@ -1,11 +1,20 @@
 package DomainModelWeather
 
-type WeatherDMService struct{}
-type WeatherDMServiceInterface interface {
-	GetWeatherInfo(vo WeatherDMVO) string
+import (
+	"WeatherAPI/Infrastructure/WeatherAPI"
+	"encoding/json"
+)
+
+type WeatherDMService struct {
+	WeatherAPI WeatherAPI.WeatherAPIRepository
 }
 
-func (ws WeatherDMService) GetWeatherInfo(vo WeatherDMVO) string {
+func (ws WeatherDMService) GetWeatherInfo(vo WeatherDMVO) json.RawMessage {
+	ws.WeatherAPI.Init()
+	data := ws.WeatherAPI.GetCityCoordinate(buildWeatherRequest(vo))
+	weatherResponse := buildWeatherResponse(data)
 
-	return ""
+	data = ws.WeatherAPI.GetCityWeather(weatherResponse)
+
+	return buildRawWeatherCityJson(data)
 }

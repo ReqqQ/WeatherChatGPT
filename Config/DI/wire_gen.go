@@ -7,8 +7,6 @@
 package DI
 
 import (
-	"WeatherAPI/UI"
-	"WeatherAPI/UI/API"
 	"github.com/google/wire"
 )
 
@@ -24,15 +22,8 @@ func InitDIContainer() (*AppService, error) {
 type AppService struct{}
 
 var (
-	controllersSet = wire.NewSet(provideControllers)
-	AppServiceSet  = wire.NewSet(provideAppService, controllersSet)
+	AppServiceSet = wire.NewSet(provideAppService)
 )
-
-func provideControllers(wc API.WeatherController) *UI.Controllers {
-	return &UI.Controllers{
-		WeatherController: wc,
-	}
-}
 
 func provideAppService() *AppService {
 	return &AppService{}

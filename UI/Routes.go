@@ -14,7 +14,7 @@ func (co Controllers) InitGetRoutes(app *fiber.App) {
 		c.Set("Version", "v1")
 		return c.Next()
 	})
-	v1.Get("/weather", func(c *fiber.Ctx) error {
+	v1.Post("/weather", func(c *fiber.Ctx) error {
 		return c.JSON(co.WeatherController.GetWeatherInfo(c))
 	})
 }

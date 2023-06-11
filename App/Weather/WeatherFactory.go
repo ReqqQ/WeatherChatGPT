@@ -6,9 +6,6 @@ import (
 )
 
 type WeatherFactory struct{}
-type WeatherFactoryInterface interface {
-	BuildWeatherCommand(c *fiber.Ctx)
-}
 
 type BuildWeatherCommand struct {
 	ZipCode     string `json:"zipCode" form:"zipCode"`
@@ -26,9 +23,9 @@ func (receiver BuildWeatherCommand) GetCountryCode() string {
 func (wf WeatherFactory) BuildWeatherCommand(c *fiber.Ctx) BuildWeatherCommand {
 	command := new(BuildWeatherCommand)
 
-	//if err := c.BodyParser(command); err != nil {
-	//	panic(err)
-	//}
+	if err := c.BodyParser(command); err != nil {
+		panic(err)
+	}
 
 	return *command
 }

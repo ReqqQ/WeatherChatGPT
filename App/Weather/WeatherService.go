@@ -1,15 +1,17 @@
 package AppWeather
 
+import (
+	DomainModelWeather "WeatherAPI/DomainModel/Weather"
+	"encoding/json"
+)
+
 type WeatherService struct {
-	WeatherFactory WeatherFactory
-}
-type WeatherServiceInterface interface {
-	GetWeatherInfo(command BuildWeatherCommand) string
+	WeatherFactory   WeatherFactory
+	WeatherDMService DomainModelWeather.WeatherDMService
 }
 
-func (ws WeatherService) GetWeatherInfo(command BuildWeatherCommand) string {
-	ws.WeatherFactory.BuildWeatherDMVO(command.GetZipCode(), command.GetCountryCode())
+func (ws WeatherService) GetWeatherInfo(command BuildWeatherCommand) json.RawMessage {
+	vo := ws.WeatherFactory.BuildWeatherDMVO(command.GetZipCode(), command.GetCountryCode())
 
-	//return weatherDomainService.GetWeatherInfo(vo)
-	return ""
+	return ws.WeatherDMService.GetWeatherInfo(vo)
 }
