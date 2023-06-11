@@ -7,6 +7,7 @@ import (
 
 func main() {
 	app := Config.Init()
-	UI.InitGetRoutes(app)
+	controller := new(UI.Controllers)
+	controller.InitGetRoutes(app)
 	Config.Start(app)
 }

@@ -13,13 +13,6 @@ type WeatherControllerInterface interface {
 	GetWeatherInfo(c *fiber.Ctx) string
 }
 
-func NewWeatherController(weatherService AppWeather.WeatherService, WeatherFactory AppWeather.WeatherFactory) *WeatherController {
-	return &WeatherController{
-		WeatherService: weatherService,
-		WeatherFactory: WeatherFactory,
-	}
-}
-
 func (wc WeatherController) GetWeatherInfo(c *fiber.Ctx) string {
 	command := wc.WeatherFactory.BuildWeatherCommand(c)
 

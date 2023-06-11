@@ -5,10 +5,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var App *DI.AppService
-
 func Init() *fiber.App {
-	App, _ = DI.InitializeAppService()
+	_, err := DI.InitDIContainer()
+	if err != nil {
+		return nil
+	}
 
 	return fiber.New()
 }

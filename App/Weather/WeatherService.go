@@ -1,16 +1,14 @@
 package AppWeather
 
-type WeatherService struct{}
+type WeatherService struct {
+	WeatherFactory WeatherFactory
+}
 type WeatherServiceInterface interface {
 	GetWeatherInfo(command BuildWeatherCommand) string
 }
 
 func (ws WeatherService) GetWeatherInfo(command BuildWeatherCommand) string {
-	//baseAPP := ServiceLocator.App
-	//factory := baseAPP.Application.WeatherApp.WeatherFactory
-	//weatherDomainService := baseAPP.DomainModel.WeatherDomain.WeatherService
-	//
-	//vo := factory.BuildWeatherDMVO(command.GetZipCode(), command.GetCountryCode())
+	ws.WeatherFactory.BuildWeatherDMVO(command.GetZipCode(), command.GetCountryCode())
 
 	//return weatherDomainService.GetWeatherInfo(vo)
 	return ""
