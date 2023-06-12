@@ -1,41 +1,26 @@
-package WeatherAPI
+package InfrastructureWeatherAPI
 
 import (
-	"github.com/valyala/fasthttp"
-	"time"
+	"WeatherAPI/Infrastructure/Base"
 )
 
-const API_WEATHER_ZIP = "http://api.openweathermap.org/geo/1.0/zip?"
-const API_CITY_WEATHER = "https://api.openweathermap.org/data/2.5/weather?"
+const WEATHER_ZIP_ENDPOINT = "http://api.openweathermap.org/geo/1.0/zip?"
+const WEATHER_CITY_ENDPOINT = "https://api.openweathermap.org/data/2.5/weather?"
 
-type WeatherAPIRepository struct {
-}
+type WeatherAPIRepository struct{}
 
-var client *fasthttp.Client
-
-func (api WeatherAPIRepository) Init() {
-	client = &fasthttp.Client{
-		MaxConnsPerHost:     1000,
-		ReadBufferSize:      4096,
-		WriteBufferSize:     4096,
-		ReadTimeout:         5 * time.Second,
-		WriteTimeout:        5 * time.Second,
-		MaxIdleConnDuration: 10 * time.Second,
-	}
-}
-
-func (api WeatherAPIRepository) GetCityCoordinate(vo WeatherRequest) []byte {
-	request, response := baseSettings()
-	request.SetRequestURI(API_WEATHER_ZIP + buildGetWeatherStats(vo))
-	callAPI(request, response)
+func (api WeatherAPIRepository) GetCityCoordinate(vo WeatherRequest, baseRequest Base.BaseRequest) []byte {
+	request, response := baseRequest.BaseSettings()
+	request.SetRequestURI(WEATHER_ZIP_ENDPOINT + buildWeatherStatsParams(vo))
+	baseRequest.CallAPI(request, response)
 
 	return response.Body()
 }
 
-func (api WeatherAPIRepository) GetCityWeather(cityResponse WeatherCityResponse) []byte {
-	request, response := baseSettings()
-	request.SetRequestURI(API_CITY_WEATHER + buildGetCityWeather(cityResponse))
-	callAPI(request, response)
+func (api WeatherAPIRepository) GetCityWeather(cityResponse WeatherCityResponse, baseRequest Base.BaseRequest) []byte {
+	request, response := baseRequest.BaseSettings()
+	request.SetRequestURI(WEATHER_CITY_ENDPOINT + buildCityWeatherParams(cityResponse))
+	baseRequest.CallAPI(request, response)
 
 	return response.Body()
 }

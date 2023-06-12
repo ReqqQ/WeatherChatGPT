@@ -1,9 +1,9 @@
 package API
 
 import (
-	AppWeather "WeatherAPI/App/Weather"
-	"encoding/json"
 	"github.com/gofiber/fiber/v2"
+
+	AppWeather "WeatherAPI/App/Weather"
 )
 
 type WeatherController struct {
@@ -11,7 +11,7 @@ type WeatherController struct {
 	WeatherFactory AppWeather.WeatherFactory
 }
 
-func (wc WeatherController) GetWeatherInfo(c *fiber.Ctx) json.RawMessage {
+func (wc WeatherController) GetWeatherInfo(c *fiber.Ctx) AppWeather.WeatherDTO {
 	command := wc.WeatherFactory.BuildWeatherCommand(c)
 
 	return wc.WeatherService.GetWeatherInfo(command)

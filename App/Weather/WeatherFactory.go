@@ -1,8 +1,10 @@
 package AppWeather
 
 import (
-	DomainModelWeather "WeatherAPI/DomainModel/Weather"
 	"github.com/gofiber/fiber/v2"
+
+	DomainModelChatGPT "WeatherAPI/DomainModel/ChatGPT"
+	DomainModelWeather "WeatherAPI/DomainModel/Weather"
 )
 
 type WeatherFactory struct{}
@@ -10,6 +12,14 @@ type WeatherFactory struct{}
 type BuildWeatherCommand struct {
 	ZipCode     string `json:"zipCode" form:"zipCode"`
 	CountryCode string `json:"countryCode" form:"countryCode"`
+}
+
+type WeatherDTO struct {
+	Content string `json:"content"`
+}
+
+func (wf WeatherFactory) BuildWeatherDTO(message DomainModelChatGPT.Message) WeatherDTO {
+	return WeatherDTO{Content: message.GetContent()}
 }
 
 func (receiver BuildWeatherCommand) GetZipCode() string {

@@ -1,9 +1,10 @@
 package DomainModelWeather
 
 import (
-	"WeatherAPI/Infrastructure/WeatherAPI"
 	"encoding/json"
 	"fmt"
+
+	"WeatherAPI/Infrastructure/WeatherAPI"
 )
 
 type WeatherDMVO struct {
@@ -11,11 +12,11 @@ type WeatherDMVO struct {
 	CountryCode string
 }
 
-func buildWeatherResponse(responseData []byte) WeatherAPI.WeatherCityResponse {
-	var response WeatherAPI.WeatherCityResponse
+func buildWeatherResponse(responseData []byte) InfrastructureWeatherAPI.WeatherCityResponse {
+	var response InfrastructureWeatherAPI.WeatherCityResponse
 	err := json.Unmarshal(responseData, &response)
 	if err != nil {
-		return WeatherAPI.WeatherCityResponse{}
+		return InfrastructureWeatherAPI.WeatherCityResponse{}
 	}
 
 	return response
@@ -32,8 +33,8 @@ func buildRawWeatherCityJson(data []byte) json.RawMessage {
 	return jsonData
 }
 
-func buildWeatherRequest(vo WeatherDMVO) WeatherAPI.WeatherRequest {
-	return WeatherAPI.WeatherRequest{
+func buildWeatherRequest(vo WeatherDMVO) InfrastructureWeatherAPI.WeatherRequest {
+	return InfrastructureWeatherAPI.WeatherRequest{
 		ZipCode:     vo.ZipCode,
 		CountryCode: vo.CountryCode,
 	}
