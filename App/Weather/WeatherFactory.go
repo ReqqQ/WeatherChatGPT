@@ -18,7 +18,7 @@ type WeatherDTO struct {
 	Content string `json:"content"`
 }
 
-func (wf WeatherFactory) BuildWeatherDTO(message DomainModelChatGPT.Message) WeatherDTO {
+func (wf WeatherFactory) BuildWeatherDTO(message DomainModelChatGPT.MessageVO) WeatherDTO {
 	return WeatherDTO{Content: message.GetContent()}
 }
 

@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/ReqqQ/ChatGPT v0.1.2 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect

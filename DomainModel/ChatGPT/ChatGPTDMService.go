@@ -4,17 +4,20 @@ import (
 	"encoding/json"
 
 	"WeatherAPI/Infrastructure/Base"
-	InfrastructureChatGPTAPI "WeatherAPI/Infrastructure/ChatGPTAPI"
+	InfrastructureChatGPTPackage "WeatherAPI/Infrastructure/ChatGPTPackage"
 )
 
 type ChatGPTService struct {
-	BaseRequest Base.BaseRequest
-	ChatGPTApi  InfrastructureChatGPTAPI.ChatGPTAPIRepository
+	BaseRequest    Base.BaseRequest
+	ChatGPTPackage InfrastructureChatGPTPackage.InfrastructureChatGPTPackage
+	Factory        DomainModelChatGPTFactory
+	Builder        DomainModelChatGPTBuilder
 }
 
-func (cg ChatGPTService) ParseCityWeatherJsonToHumanLang(json json.RawMessage) Message {
+func (cg ChatGPTService) ParseCityWeatherJsonToHumanLang(json json.RawMessage) MessageVO {
 	cg.BaseRequest.Init()
-	response := cg.ChatGPTApi.TranslateWeatherJsonToHumanLanguage(json, cg.BaseRequest)
 
-	return getChatGPTMessageResponse(response)
+	messageDTO := cg.ChatGPTPackage.GetChatGPTWheather(cg.Builder.BuildWheatherPrompt(json))
+
+	return cg.Factory.GetMessageVO(messageDTO.Content)
 }
